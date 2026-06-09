@@ -1,0 +1,12 @@
+//
+// Created by elnchou on 08-06-26.
+//
+
+#ifndef LOGST2_MACROS_H
+#define LOGST2_MACROS_H
+
+typedef unsigned int uint;
+typedef double dab;
+typedef long double daab;
+
+#endif //LOGST2_MACROS_H
