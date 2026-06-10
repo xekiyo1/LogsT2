@@ -5,7 +5,7 @@
 #ifndef LOGST2_BINARYTREE_H
 #define LOGST2_BINARYTREE_H
 
-#include "../macros.hp"
+#include "../../macros.hp"
 
 /**
  * Representación de un Nodo en datos, que contiene punteros a otros dos nodos.
