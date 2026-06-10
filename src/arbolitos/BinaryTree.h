@@ -5,7 +5,7 @@
 #ifndef LOGST2_BINARYTREE_H
 #define LOGST2_BINARYTREE_H
 
-#include "../macros.hp"
+#include "../../macros.hp"
 
 /**
  * Representación de un Nodo en datos, que contiene punteros a otros dos nodos.
@@ -17,6 +17,10 @@ struct Nodo{
     struct Nodo *izq;
     /// Adjacencia del nodo, que contiene valores mayores al actual.
     struct Nodo *der;
+    //Nodo padre para hacer muy muy faciles las rotaciones
+    struct Nodo *parent;
+    //Altura para uso en árboles AVL
+    uint height;
 };
 
 /**
@@ -27,6 +31,8 @@ class BTree {
 protected:
     /// Nodo inicial del árbol, desde el que comienza a buscar.
     Nodo *raiz = nullptr;
+    void zig(Nodo *nodo);
+    void zag(Nodo *nodo);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.
@@ -46,7 +52,7 @@ public:
      * @return Busca la posición de un valor y lo añade al árbol. ¿Qué pasa si está repetido?
      * @note Podría re-balancear el árbol si es una subclase de BTree.
      */
-    virtual void insert(uint val);
+    virtual Nodo* insert(uint val);
 
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.
