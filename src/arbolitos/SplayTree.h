@@ -8,9 +8,9 @@
 
 class SplayTree : public BTree {
 private:
-    void splay();
+    void splay(Nodo *nodo);
 public:
-    void insert(uint val) override;
+    Nodo *insert(uint val) override;
     Nodo *search(uint val) override;
 };
 

@@ -31,6 +31,8 @@ class BTree {
 protected:
     /// Nodo inicial del árbol, desde el que comienza a buscar.
     Nodo *raiz = nullptr;
+    void zig(Nodo *nodo);
+    void zag(Nodo *nodo);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.

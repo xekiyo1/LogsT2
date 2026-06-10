@@ -6,6 +6,33 @@
 #include <queue>
 #include <algorithm>
 
+void BTree::zag(Nodo *nodo) {
+    Nodo *obj = nodo->izq;
+
+    // cambiar los padres
+    obj->parent = nodo->parent;
+    nodo->parent = obj;
+
+    // cambiar las aristas
+    std::swap(nodo->izq, obj->der);
+
+    //actualizar altura
+    nodo->height--; obj->height++;
+}
+
+void BTree::zig(Nodo *nodo) {
+    Nodo *obj = nodo->der;
+
+    // cambiar los padres
+    obj->parent = nodo->parent;
+    nodo->parent = obj;
+
+    // cambiar las aristas y altura
+    std::swap(nodo->der, obj->izq);
+    //actualizar altura
+    nodo->height--; obj->height++;
+}
+
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
     while (ans != nullptr && ans->value != val)
