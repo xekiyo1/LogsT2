@@ -4,6 +4,7 @@
 
 #include "BinaryTree.h"
 #include <queue>
+#include <algorithm>
 
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
@@ -24,31 +25,52 @@ void BTree::clear(const bool deleteObj) {
 }
 
 //probablemente nunca lo usemos pero para tenerlo
-void BTree::insert(const uint val) {
+Nodo* BTree::insert(const uint val) {
     if (raiz==nullptr) {
-        raiz = new Nodo{val,nullptr,nullptr};
-        return;
+        raiz = new Nodo{val,nullptr,nullptr,nullptr,0};
+        return raiz;
     }
 
     Nodo *parent = raiz;
+    Nodo *inserted = nullptr;
 
+    //Searches and inserts
     for (;;) {
-        if (val == parent->value) return;
+        if (val == parent->value) return parent;
+
         if (val < parent->value) {
             if (parent->izq == nullptr) {
-                parent->izq = new Nodo{val,nullptr,nullptr};
-                return;
+                parent->izq = new Nodo{val,nullptr,nullptr, parent,0};
+                inserted = parent -> izq;
             }
             parent = parent->izq;
         }else {
             if (parent->der == nullptr) {
-                parent->der = new Nodo{val,nullptr,nullptr};
-                return;
+                parent->der = new Nodo{val,nullptr,nullptr, parent, 0};
+                inserted = parent->der;
             }
             parent = parent->der;
         }
     }
+
+    Nodo *trepador = inserted->parent;
+    uint hder, hizq; 
+    for(;;){
+        if(trepador == nullptr) break;
+
+        if (trepador->izq) hizq = trepador->izq->height; else hizq = 0;
+        if (trepador->der) hder = trepador->der->height; else hder = 0;
+        uint new_height = std::max(hder, hizq)+1;
+
+        if (new_height == trepador->height) break;
+        
+        trepador->height = new_height;
+    }
+
+
+    return inserted;
 }
+
 
 BTree::~BTree() {
     clear();

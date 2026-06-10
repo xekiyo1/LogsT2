@@ -50,7 +50,7 @@ public:
      * @return Busca la posición de un valor y lo añade al árbol. ¿Qué pasa si está repetido?
      * @note Podría re-balancear el árbol si es una subclase de BTree.
      */
-    virtual void insert(uint val);
+    virtual Nodo* insert(uint val);
 
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.
