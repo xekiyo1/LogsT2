@@ -17,6 +17,10 @@ struct Nodo{
     struct Nodo *izq;
     /// Adjacencia del nodo, que contiene valores mayores al actual.
     struct Nodo *der;
+    //Nodo padre para hacer muy muy faciles las rotaciones
+    struct Nodo *parent;
+    //Altura para uso en árboles AVL
+    uint height;
 };
 
 /**
