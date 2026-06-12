@@ -5,27 +5,46 @@
 #include "SplayTree.h"
 
 void SplayTree::splay(Nodo *nodo) {
-    Nodo *parent;
-    //mientras el nodo no sea la raíz...
-    while (nodo->height != 1) {
-        parent = nodo->parent;
-        //subir este nodo un nivel
-        if (parent->der == nodo)
-            zag(parent); //si está a la derecha, necesitamos un zag
+    while (nodo->parent != nullptr) {
+        Nodo *padre = nodo->parent;
+        // existe el abuelo???
+        if (Nodo *abuelo = padre->parent; abuelo == nullptr)
+        {
+            //ROTACIÓN SIMPLE Y TERMINAR, no hay abuelo
+            if (nodo->value < padre->value) zig(padre);
+            else zag(padre);
+            nodo = padre;
+        }
         else
-            zig(parent); //si está a la izquierda, necesitamos un zig
+        {
+            // DOBLE ROTACIÓN, hay que revisar el abuelo
+            if (padre->value < abuelo->value) {
+                //ambos menores
+                if (nodo->value < padre->value) zigzig(abuelo);
+                else zigzag(abuelo);
+            }else {
+                //ambos mayores
+                if (nodo->value > padre->value) zagzag(abuelo);
+                else zagzig(abuelo);
+            }
+            nodo = abuelo;
+        }
     }
-    raiz = nodo;
 }
+
+void SplayTree::zigzig(Nodo *nodo) { zig(nodo); zig(nodo); }
+void SplayTree::zigzag(Nodo *nodo) { zig(nodo->der); zag(nodo); }
+void SplayTree::zagzig(Nodo *nodo) { zag(nodo->izq); zig(nodo); }
+void SplayTree::zagzag(Nodo *nodo) { zag(nodo); zag(nodo); }
 
 Nodo *SplayTree::insert(const uint val) {
     Nodo *nodo = BTree::insert(val);
     splay(nodo);
-    return nodo;
+    return raiz;
 }
 
 Nodo *SplayTree::search(const uint val) {
     Nodo *nodo = BTree::search(val);
     splay(nodo);
-    return nodo;
+    return raiz;
 }
