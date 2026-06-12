@@ -9,28 +9,30 @@
 void BTree::zag(Nodo *nodo) {
     Nodo *obj = nodo->izq;
 
-    // cambiar los padres
-    obj->parent = nodo->parent;
-    nodo->parent = obj;
+    // cambiar el valor
+    std::swap(nodo->value, obj->value);
 
-    // cambiar las aristas
-    std::swap(nodo->izq, obj->der);
+    // cambiar los hijos
+    std::swap(obj->izq, obj->der);
 
-    //actualizar altura
-    nodo->height--; obj->height++;
+    //dar vuelta las referencias
+    std::swap(nodo->der, obj->der);
+    std::swap(nodo->izq, nodo->der);
 }
 
 void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
-    // cambiar los padres
-    obj->parent = nodo->parent;
-    nodo->parent = obj;
+    // intercambiar el valor de los nodos
+    std::swap(nodo->value, obj->value);
 
-    // cambiar las aristas y altura
+    // ahora "obj" debe estar a la izquierda de "nodo" en vez de su derecha
+    std::swap(nodo->izq, nodo->der);
+
+    //el valor de la izq quedó en nodo->der, debe dejarse lo más a la izq posible
     std::swap(nodo->der, obj->izq);
-    //actualizar altura
-    nodo->height--; obj->height++;
+    //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
+    std::swap(obj->der, nodo->der);
 }
 
 Nodo *BTree::search(const uint val) {
@@ -53,31 +55,16 @@ void BTree::clear(const bool deleteObj) {
 
 //probablemente nunca lo usemos pero para tenerlo
 Nodo* BTree::insert(const uint val) {
-    if (raiz==nullptr) {
-        raiz = new Nodo{val,nullptr,nullptr};
-        return raiz;
-    }
+    //agarrar el puntero al puntero de la raíz (xd)
+    Nodo **parent = &raiz;
 
-    Nodo *parent = raiz;
+    //iterar hasta llegar a un puntero nulo
+    while (*parent != nullptr)
+        parent = val < (*parent)->value ? &(*parent)->izq : &(*parent)->der;
 
-    for (;;) {
-        if (val == parent->value) return parent;
-        if (val < parent->value) {
-            if (parent->izq == nullptr) {
-                parent->izq = new Nodo{val,nullptr,nullptr};
-                return parent->izq;
-            }
-            parent = parent->izq;
-        }else {
-            if (parent->der == nullptr) {
-                parent->der = new Nodo{val,nullptr,nullptr};
-                return parent->der;
-            }
-            parent = parent->der;
-        }
-    }
-}
+    //reasignar el puntero nulo a un nodo nuevecito
+    *parent = new Nodo{val,nullptr,nullptr};
 
-BTree::~BTree() {
-    clear();
+    //retornar el nodo nuevecito
+    return *parent;
 }
