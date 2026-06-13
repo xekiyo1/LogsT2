@@ -17,7 +17,7 @@ RandomValues::RandomValues(const std::size_t howMany) {
     dataset.resize(N);
     for (auto &x : dataset) x = generateRandUint();
 
-    std:vector<double> probab;
+    std::vector<double> probab;
     probab.reserve(N);
 
     for (size_t i = 0; i < N; ++i) {
