@@ -38,7 +38,7 @@ void BTree::zig(Nodo *nodo) {
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
     while (ans != nullptr && ans->value != val)
-        raiz = raiz->value < val ? raiz->izq : raiz->der;
+        ans = raiz->value < val ? raiz->izq : raiz->der;
     return ans;
 }
 
