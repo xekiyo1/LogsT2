@@ -3,3 +3,7 @@
 //
 
 #include "AVL.h"
+
+Nodo* AVL::insert(uint val){
+
+}

@@ -18,6 +18,15 @@ void BTree::zag(Nodo *nodo) {
     //dar vuelta las referencias
     std::swap(nodo->der, obj->der);
     std::swap(nodo->izq, nodo->der);
+
+    //Cambiar las referencias a padres que quedaron mal hechas
+    std::swap(obj->der->parent, nodo->izq->parent);
+
+
+    //Actualización de altura
+    updateHeight(obj);
+    updateHeight(nodo);
+
 }
 
 void BTree::zig(Nodo *nodo) {
@@ -33,6 +42,13 @@ void BTree::zig(Nodo *nodo) {
     std::swap(nodo->der, obj->izq);
     //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
     std::swap(obj->der, nodo->der);
+
+    //Cambiar las referencias a padres que quedaron mal hechas
+    std::swap(nodo->der->parent, obj->izq->parent);
+
+    //Actualización de altura
+    updateHeight(obj);
+    updateHeight(nodo);
 }
 
 Nodo *BTree::search(const uint val) {
@@ -55,7 +71,6 @@ void BTree::clear(const bool deleteObj) {
 }
 
 //probablemente nunca lo usemos pero para tenerlo
-// TODO: Reimplement height update propagation
 Nodo* BTree::insert(const uint val) {
     //agarrar el puntero al puntero de la raíz (xd)
     Nodo **parent = &raiz;
@@ -91,7 +106,7 @@ void BTree::updateHeight(Nodo* node){
     uint rh = node->der ? node->der->height : 0;
 
     //Updates height of the node
-    node->height = std::max(curr_height, 1 + std::max(lh, rh));
+    node->height = 1 + std::max(lh, rh);
 
     // If height changes, updates the height of the parent as well
     if (node->height != curr_height) return updateHeight(node->parent);

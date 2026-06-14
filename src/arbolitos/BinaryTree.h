@@ -45,6 +45,13 @@ protected:
      * @param nodo Puntero al nodo que se modificará.
      */
     static void zag(Nodo *nodo);
+
+    /**
+        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
+        @param node El nodo cuya altura será actualizada
+        @param propagate Si se propagan los cambios o no
+    */
+    static void updateHeight(Nodo* node);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.
@@ -67,11 +74,7 @@ public:
     virtual Nodo* insert(uint val);
     
 
-    /**
-        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
-        @param node El nodo cuya altura será actualizada
-    */
-    virtual void updateHeight(Nodo* node);
+
 
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.

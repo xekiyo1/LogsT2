@@ -8,7 +8,7 @@
 
 class AVL : BTree{
 public:
-    void insert(uint val) override;
+    Nodo* insert(uint val) override;
 };
 
 
