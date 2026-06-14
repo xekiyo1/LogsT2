@@ -6,9 +6,9 @@
 #define LOGST2_AVL_H
 #include "BinaryTree.h"
 
-class AVL : BTree{
+class AVL : public BTree{
 public:
-    void insert(uint val) override;
+    Nodo* insert(uint val) override;
 };
 
 
