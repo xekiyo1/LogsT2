@@ -7,7 +7,7 @@
 #include <vector>
 #include <random>
 
-#define MULT_FACTOR 1000000000;
+constexpr double lambda = 0.008; // parametro lambda para la distribución
 
 class RandomValues {
 private:
@@ -16,10 +16,10 @@ private:
     /// Vector que almacena los valores generados en la inicialización.
     std::vector<uint> dataset;
     /// Vector que almacena las probabilidades como discrete distribution
-    std::discrete_distribution<ullong> probs;
+    std::discrete_distribution<uint> probs;
     uint generateIdx();
     static uint generateRandUint();
-    static ullong calcProb(uint i);
+    //static ullong calcProb(uint i);
 public:
     RandomValues(std::size_t howMany);
     /**
@@ -34,5 +34,5 @@ public:
      * @param i
      * @return El índice de la cosa
      */
-    uint const &operator[](uint i);
+    uint const &operator[](uint i) const;
 };

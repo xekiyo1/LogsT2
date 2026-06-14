@@ -31,8 +31,20 @@ class BTree {
 protected:
     /// Nodo inicial del árbol, desde el que comienza a buscar.
     Nodo *raiz = nullptr;
-    void zig(Nodo *nodo);
-    void zag(Nodo *nodo);
+    /**
+     * Realiza una rotación "zig" en este nodo, dejando su nodo de la izquierda en la posición del original.
+     *
+     * NOTA: Esto intercambia las direcciones de memoria y los punteros, así que no es necesario actualizar el padre.
+     * @param nodo Puntero al nodo que se modificará.
+     */
+    static void zig(Nodo *nodo);
+    /**
+     * Realiza una rotación "zag" en este nodo, dejando su nodo de la derecha en la posición del original.
+     *
+     * NOTA: Esto intercambia las direcciones de memoria y los punteros, así que no es necesario actualizar el padre.
+     * @param nodo Puntero al nodo que se modificará.
+     */
+    static void zag(Nodo *nodo);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.
@@ -57,7 +69,7 @@ public:
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.
      */
-    virtual ~BTree();
+    virtual ~BTree() {clear();}
 };
 
 #endif //LOGST2_BINARYTREE_H

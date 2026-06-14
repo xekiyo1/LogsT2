@@ -9,39 +9,42 @@
 void BTree::zag(Nodo *nodo) {
     Nodo *obj = nodo->izq;
 
-    // cambiar los padres
-    obj->parent = nodo->parent;
-    nodo->parent = obj;
+    // cambiar el valor
+    std::swap(nodo->value, obj->value);
 
-    // cambiar las aristas
-    std::swap(nodo->izq, obj->der);
+    // cambiar los hijos
+    std::swap(obj->izq, obj->der);
 
-    //actualizar altura
-    nodo->height--; obj->height++;
+    //dar vuelta las referencias
+    std::swap(nodo->der, obj->der);
+    std::swap(nodo->izq, nodo->der);
 }
 
 void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
-    // cambiar los padres
-    obj->parent = nodo->parent;
-    nodo->parent = obj;
+    // intercambiar el valor de los nodos
+    std::swap(nodo->value, obj->value);
 
-    // cambiar las aristas y altura
+    // ahora "obj" debe estar a la izquierda de "nodo" en vez de su derecha
+    std::swap(nodo->izq, nodo->der);
+
+    //el valor de la izq quedó en nodo->der, debe dejarse lo más a la izq posible
     std::swap(nodo->der, obj->izq);
-    //actualizar altura
-    nodo->height--; obj->height++;
+    //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
+    std::swap(obj->der, nodo->der);
 }
 
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
     while (ans != nullptr && ans->value != val)
-        raiz = raiz->value < val ? raiz->izq : raiz->der;
+        ans = raiz->value < val ? raiz->izq : raiz->der;
     return ans;
 }
 
 void BTree::clear(const bool deleteObj) {
-    std::queue<Nodo*> bfs = {raiz};
+    std::queue<Nodo*> bfs;
+    bfs.push(raiz);
     while (!bfs.empty()) {
         raiz = bfs.front(); bfs.pop();
         if (raiz->der != nullptr) bfs.push(raiz->der);
@@ -52,53 +55,18 @@ void BTree::clear(const bool deleteObj) {
 }
 
 //probablemente nunca lo usemos pero para tenerlo
+// TODO: Reimplement height update propagation
 Nodo* BTree::insert(const uint val) {
-    if (raiz==nullptr) {
-        raiz = new Nodo{val,nullptr,nullptr,nullptr,0};
-        return raiz;
-    }
+    //agarrar el puntero al puntero de la raíz (xd)
+    Nodo **parent = &raiz;
 
-    Nodo *parent = raiz;
-    Nodo *inserted = nullptr;
+    //iterar hasta llegar a un puntero nulo
+    while (*parent != nullptr)
+        parent = val < (*parent)->value ? &(*parent)->izq : &(*parent)->der;
 
-    //Searches and inserts
-    for (;;) {
-        if (val == parent->value) return parent;
+    //reasignar el puntero nulo a un nodo nuevecito
+    *parent = new Nodo{val,nullptr,nullptr};
 
-        if (val < parent->value) {
-            if (parent->izq == nullptr) {
-                parent->izq = new Nodo{val,nullptr,nullptr, parent,0};
-                inserted = parent -> izq;
-            }
-            parent = parent->izq;
-        }else {
-            if (parent->der == nullptr) {
-                parent->der = new Nodo{val,nullptr,nullptr, parent, 0};
-                inserted = parent->der;
-            }
-            parent = parent->der;
-        }
-    }
-
-    Nodo *trepador = inserted->parent;
-    uint hder, hizq; 
-    for(;;){
-        if(trepador == nullptr) break;
-
-        if (trepador->izq) hizq = trepador->izq->height; else hizq = 0;
-        if (trepador->der) hder = trepador->der->height; else hder = 0;
-        uint new_height = std::max(hder, hizq)+1;
-
-        if (new_height == trepador->height) break;
-        
-        trepador->height = new_height;
-    }
-
-
-    return inserted;
-}
-
-
-BTree::~BTree() {
-    clear();
+    //retornar el nodo nuevecito
+    return *parent;
 }
