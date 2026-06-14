@@ -29,6 +29,11 @@ void BTree::zag(Nodo *nodo) {
 
 }
 
+uint BTree:: getHeight(Nodo* node){
+    if(node == nullptr) return 0;
+    return node->height; 
+}
+
 void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
@@ -100,10 +105,10 @@ void BTree::updateHeight(Nodo* node){
     
 
     //height of left son
-    uint lh = node->izq ? node->izq->height : 0;
+    uint lh = getHeight(node->izq);
 
     //height of the right son
-    uint rh = node->der ? node->der->height : 0;
+    uint rh = getHeight(node->der);
 
     //Updates height of the node
     node->height = 1 + std::max(lh, rh);

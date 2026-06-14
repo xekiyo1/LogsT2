@@ -47,9 +47,14 @@ protected:
     static void zag(Nodo *nodo);
 
     /**
+    * Gets a node height
+    * @param nodo The node to be inspected
+    */
+    static uint getHeight(Nodo *nodo);
+
+    /**
         Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
         @param node El nodo cuya altura será actualizada
-        @param propagate Si se propagan los cambios o no
     */
     static void updateHeight(Nodo* node);
 public:
