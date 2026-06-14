@@ -1,13 +1,16 @@
 BTree=src/arbolitos/BinaryTree.h src/arbolitos/BinaryTree.cpp
 AVLFiles=src/arbolitos/AVL.h src/arbolitos/AVL.cpp
 SplayFiles=src/arbolitos/SplayTree.h src/arbolitos/SplayTree.cpp
+RandomFiles=src/RandomGen/RandomArray.h src/RandomGen/RandomArray.cpp
 
 Tester=src/main/experimentos.cpp
 
 Timer=src/util/calcTime/calcTime.cpp
 
-ALL-TREES=$(BTree) $(AVLFiles) $(SplayFiles)
-FILES-CONSTRUCT=$(Tester) $(ALL-TREES)
+ALL-TREES=$(BTree) $(SplayFiles) $(AVLFiles)
+UTIlS= $(RandomFiles)
+
+FILES-CONSTRUCT=$(Tester) $(ALL-TREES) $(UTIlS)
 FLAGS-CONSTRUCT=-O3 -o "$(OUT)"
 
 OUT=a.out
@@ -16,7 +19,7 @@ exec:
 	./$(OUT)
 
 compile:
-	g++ $(FLAGS-CONSTRUCT) $(ALL-TREES)
+	g++ $(FLAGS-CONSTRUCT) $(FILES-CONSTRUCT)
 run:
 	make compile
 	make exec

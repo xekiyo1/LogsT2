@@ -17,8 +17,7 @@ using namespace chrono;
 
 class HPTimer {
 private:
-    high_resolution_clock::time_point startTime;
-
+    high_resolution_clock::time_point startTime = high_resolution_clock::now();
 public:
     void start() {
         startTime = high_resolution_clock::now();
@@ -31,34 +30,46 @@ public:
     }
 };
 
-void experimentar(string& tipo, 
-                  BTree* arbol, 
-                  string& nombre, 
-                  vector<uint>& datosInsercion, 
-                  vector<uint>& datosBusqueda, 
-                  int N, 
-                  int M, 
+void experimentar(const string &tipo,
+                  BTree* arbol,
+                  const string &nombre,
+                  const vector<uint>& datosInsercion,
+                  const vector<uint>& datosBusqueda,
+                  const std::size_t N,
+                  const std::size_t M,
                   ofstream& csv) {
 
     HPTimer timer;
 
-    for (uint val : datosInsercion) {
+    for (const uint val : datosInsercion)
         arbol->insert(val);
-    }
+
     unsigned long long tiempoIns = timer.end();
 
     csv << N << "," << tipo << "," << nombre << ",InsercionTotal," << tiempoIns << "\n";
     
     for (int i = 0; i < M; ++i) {
-        uint val = datosBusqueda[i];
+        const uint val = datosBusqueda[i];
         
         timer.start();
         arbol->search(val);
-        unsigned long long tiempoBsq = timer.end();
+        const unsigned long long tiempoBsq = timer.end();
         
         csv << N << "," << tipo << "," << nombre << ",Busqueda_" << i << "," << tiempoBsq << "\n";
     }
 }                    
+
+void experimentarAmbos(const string &etiquetaExperimento,
+                    const vector<uint>& datosInsercion,
+                    const vector<uint>& datosBusqueda,
+                    const std::size_t N,
+                    const std::size_t M,
+                    ofstream& csv) {
+    AVL avl;
+    SplayTree splay;
+    experimentar("b", &avl,   "AVL",   datosInsercion, datosBusqueda, N, M, csv);
+    experimentar("b", &splay, "Splay", datosInsercion, datosBusqueda, N, M, csv);
+}
 
 
 int main() {
@@ -88,33 +99,10 @@ int main() {
 
         vector<uint> busquedaSesgada = generador.getVal(M);
 
-        {
-            AVL avl;
-            SplayTree splay;
-            experimentar("a", &avl,   "AVL",   insercionAleatoria, busquedaUniforme, N, M, csv);
-            experimentar("a", &splay, "Splay", insercionAleatoria, busquedaUniforme, N, M, csv);
-        }
-
-        {
-            AVL avl;
-            SplayTree splay;
-            experimentar("b", &avl,   "AVL",   insercionAleatoria, busquedaSesgada, N, M, csv);
-            experimentar("b", &splay, "Splay", insercionAleatoria, busquedaSesgada, N, M, csv);
-        }
-
-        {
-            AVL avl;
-            SplayTree splay;
-            experimentar("c", &avl,   "AVL",   insercionOrdenada, busquedaUniforme, N, M, csv);
-            experimentar("c", &splay, "Splay", insercionOrdenada, busquedaUniforme, N, M, csv);
-        }
-
-        {
-            AVL avl;
-            SplayTree splay;
-            experimentar("d", &avl,   "AVL",   insercionOrdenada, busquedaSesgada, N, M, csv);
-            experimentar("d", &splay, "Splay", insercionOrdenada, busquedaSesgada, N, M, csv);
-        }
+        experimentarAmbos("a", insercionAleatoria, busquedaUniforme, N, M, csv);
+        experimentarAmbos("b", insercionAleatoria, busquedaSesgada, N, M, csv);
+        experimentarAmbos("c", insercionOrdenada, busquedaUniforme, N, M, csv);
+        experimentarAmbos("d", insercionOrdenada, busquedaSesgada, N, M, csv);
 
         cout << " OK" << endl;
     }
