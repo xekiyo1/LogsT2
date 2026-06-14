@@ -25,21 +25,21 @@ RandomValues::RandomValues(const std::size_t howMany) {
         probab.push_back(exp(-lambda * i)); 
     }    
     
-    std::discrete_distribution<int> probs(probab.begin(), probab.end());
+    probs = std::discrete_distribution<uint>(probab.begin(), probab.end());
 }
 
 uint RandomValues::generateIdx() {
-    
-    return probs(gen());
+    return probs(gen);
 }
 
+/*
 ullong RandomValues::calcProb(uint i) {
 
     ullong peso = exp(-lambda * i);
 
     return peso/static_cast<double>(N);
 
-}
+}*/
 
 std::vector<uint> RandomValues::getVal(std::size_t quantity) {
     std::vector<uint> ans(quantity);
@@ -47,6 +47,6 @@ std::vector<uint> RandomValues::getVal(std::size_t quantity) {
     return ans;
 }
 
-const uint &RandomValues::operator[](uint i) {
+const uint &RandomValues::operator[](uint i) const {
     return dataset[i];
 }

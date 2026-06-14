@@ -43,7 +43,8 @@ Nodo *BTree::search(const uint val) {
 }
 
 void BTree::clear(const bool deleteObj) {
-    std::queue<Nodo*> bfs = {raiz};
+    std::queue<Nodo*> bfs;
+    bfs.push(raiz);
     while (!bfs.empty()) {
         raiz = bfs.front(); bfs.pop();
         if (raiz->der != nullptr) bfs.push(raiz->der);
