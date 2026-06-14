@@ -12,7 +12,7 @@ private:
      * Lleva a un nodo hasta la raíz del árbol mediante rotaciones dobles.
      * @param nodo Nodo que se llevará hasta la cima del mundo
      */
-    static void splay(Nodo *nodo);
+    static void splay(const Nodo *nodo);
 
     /**
      * Realiza la operación "zig" en esta posición de memoria, dos veces.
