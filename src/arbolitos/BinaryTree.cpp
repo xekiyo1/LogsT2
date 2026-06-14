@@ -60,13 +60,39 @@ Nodo* BTree::insert(const uint val) {
     //agarrar el puntero al puntero de la raíz (xd)
     Nodo **parent = &raiz;
 
+    Nodo *g_parent = nullptr;
+
     //iterar hasta llegar a un puntero nulo
-    while (*parent != nullptr)
+    while (*parent != nullptr){
         parent = val < (*parent)->value ? &(*parent)->izq : &(*parent)->der;
+        g_parent = (*parent)->parent;
+    }
 
     //reasignar el puntero nulo a un nodo nuevecito
-    *parent = new Nodo{val,nullptr,nullptr};
+    *parent = new Nodo{val,nullptr,nullptr,g_parent, 1};
+
+    //De ser necesario, actualiza la altura del nodo padre del insertado
+    updateHeight(g_parent);
 
     //retornar el nodo nuevecito
     return *parent;
+}
+
+void BTree::updateHeight(Nodo* node){
+    if (node==nullptr) return;
+
+    uint curr_height = node->height;
+    
+
+    //height of left son
+    uint lh = node->izq ? node->izq->height : 0;
+
+    //height of the right son
+    uint rh = node->der ? node->der->height : 0;
+
+    //Updates height of the node
+    node->height = std::max(curr_height, 1 + std::max(lh, rh));
+
+    // If height changes, updates the height of the parent as well
+    if (node->height != curr_height) return updateHeight(node->parent);
 }

@@ -65,6 +65,13 @@ public:
      * @note Podría re-balancear el árbol si es una subclase de BTree.
      */
     virtual Nodo* insert(uint val);
+    
+
+    /**
+        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
+        @param node El nodo cuya altura será actualizada
+    */
+    virtual void updateHeight(Nodo* node);
 
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.
