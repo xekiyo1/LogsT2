@@ -15,8 +15,29 @@ Nodo* AVL::insert(uint val){
     return inserted;
 }
 
+void AVL::balance(Nodo* node){
+    int bf = getBalanceFactor(node); //How do i get a bf? >~<
+    Nodo* child;
 
-uint AVL::getBalanceFactor(Nodo* node){
+    if(bf>=2){
+        child = node->der;
+
+        if(getBalanceFactor(child)<0) zig(child);
+
+        zag(node);
+    }else if(bf<=-2){
+        child = node->izq;
+
+        if(getBalanceFactor(child)>0) zag(child);
+
+
+        zig(node);
+    }
+
+}
+
+
+int AVL::getBalanceFactor(Nodo* node){
     if (node == nullptr) return 0;
     return getHeight(node->der)-getHeight(node->izq);
 }

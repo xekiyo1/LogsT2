@@ -6,7 +6,7 @@
 #include <queue>
 #include <algorithm>
 
-void BTree::zag(Nodo *nodo) {
+void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->izq;
 
     // cambiar el valor
@@ -34,7 +34,7 @@ uint BTree:: getHeight(Nodo* node){
     return node->height; 
 }
 
-void BTree::zig(Nodo *nodo) {
+void BTree::zag(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
     // intercambiar el valor de los nodos

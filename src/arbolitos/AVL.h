@@ -12,7 +12,7 @@ protected:
         gets the balance factor for a given AVL tree.
         @param node: The node to inspect for balance factor
     */
-    static uint getBalanceFactor(Nodo* node);
+    static int getBalanceFactor(Nodo* node);
 
     /**
         Balances the tree.
