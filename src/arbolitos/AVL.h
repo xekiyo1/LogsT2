@@ -12,12 +12,21 @@ protected:
         gets the balance factor for a given AVL tree.
         @param node: The node to inspect for balance factor
     */
-    static int getBalanceFactor(Nodo* node);
-
+    static int getBalanceFactor(const Nodo* node);
     /**
         Balances the tree.
     */
     static void balance(Nodo* node);
+    /**
+    * Gets a node height
+    * @param nodo The node to be inspected
+    */
+    static uint getHeight(const Nodo *nodo);
+    /**
+        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
+        @param node El nodo cuya altura será actualizada
+    */
+    static void updateHeight(Nodo* node);
 public:
     Nodo* insert(uint val) override;
 };
