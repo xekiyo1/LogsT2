@@ -19,6 +19,10 @@ int main(){
     insert(7); //2(,5(,7)) -> 7(5(2,),)
     insert(20);
     insert(8);
+    insert(8);
     insert(9);
     insert(10);
+
+    hola.search(10);
+    hola.search(11);
 }

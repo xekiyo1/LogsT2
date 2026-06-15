@@ -5,6 +5,7 @@
 #include "SplayTree.h"
 
 void SplayTree::splay(Nodo *nodo) {
+    if (nodo==nullptr) return;
     while (nodo->parent != nullptr) {
         Nodo *padre = nodo->parent;
         // existe el abuelo???

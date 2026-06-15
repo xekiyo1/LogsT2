@@ -41,23 +41,18 @@ void experimentar(const string &tipo,
 
     HPTimer timer;
 
+    timer.start();
     for (const uint val : datosInsercion)
         arbol->insert(val);
-
     unsigned long long tiempoIns = timer.end();
-
     csv << N << "," << tipo << "," << nombre << ",InsercionTotal," << tiempoIns << "\n";
 
-    for (int i = 0; i < M; ++i) {
-        const uint val = datosBusqueda[i];
-        
-        timer.start();
-        arbol->search(val);
-        const unsigned long long tiempoBsq = timer.end();
-        cout<<"iniciando..."<<endl;
-        csv << N << "," << tipo << "," << nombre << ",Busqueda_" << i << "," << tiempoBsq << "\n";
-    }
-}                    
+    timer.start();
+    for (int i = 0; i < M; ++i)
+        arbol->search(datosBusqueda[i]);
+    const unsigned long long tiempoBsq = timer.end();
+    csv << N << "," << tipo << "," << nombre << ",busqueda," << tiempoBsq << "\n";
+}
 
 void experimentarAmbos(const string &etiquetaExperimento,
                     const vector<uint>& datosInsercion,
@@ -68,7 +63,7 @@ void experimentarAmbos(const string &etiquetaExperimento,
     BTree* arbol = new SplayTree;
     experimentar(etiquetaExperimento, arbol, "Splay", datosInsercion, datosBusqueda, N, M, csv);
     delete arbol;
-    
+
     arbol = new AVL;
     experimentar(etiquetaExperimento, arbol,   "AVL",   datosInsercion, datosBusqueda, N, M, csv);
     delete arbol;
@@ -85,7 +80,7 @@ int main() {
         size_t N = 1ULL << exp;
         size_t M = 10 * c * N;
 
-        cout << "N = " << N << "  M = " << M << " ..." << flush;
+        cout << "N = " << N << "  M = " << M << " ..." << endl;
 
         RandomValues generador(N);
         string label = "a";

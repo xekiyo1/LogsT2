@@ -55,7 +55,7 @@ void BTree::zag(Nodo *nodo) {
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
     while (ans != nullptr && ans->value != val)
-        ans = raiz->value < val ? raiz->izq : raiz->der;
+        ans = ans->value < val ? ans->izq : ans->der;
     return ans;
 }
 
@@ -79,6 +79,7 @@ Nodo* BTree::insert(const uint val) {
     //iterar hasta llegar a un puntero nulo
     while (*siguiente != nullptr) {
         parent = *siguiente;
+        if (parent->value == val) return parent;
         siguiente = val < parent->value ? &parent->izq : &parent->der;
     }
 
