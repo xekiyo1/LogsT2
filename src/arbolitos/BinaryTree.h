@@ -59,18 +59,16 @@ protected:
      * @param nodo Puntero al nodo que se modificará.
      */
     static void zag(Nodo *nodo);
-
     /**
-    * Gets a node height
-    * @param nodo The node to be inspected
-    */
-    static uint getHeight(Nodo *nodo);
-
+     * Realiza la operación y luego "zig" "zag" en una posición de memoria, dos veces.
+     * @param nodo Nodo que será rotado.
+     */
+    static void zigzag(Nodo* nodo);
     /**
-        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
-        @param node El nodo cuya altura será actualizada
-    */
-    static void updateHeight(Nodo* node);
+     * Realiza la operación y luego "zag" "zig" en una posición de memoria, dos veces.
+     * @param nodo Nodo que será rotado.
+     */
+    static void zagzig(Nodo* nodo);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.

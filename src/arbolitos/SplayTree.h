@@ -20,16 +20,6 @@ private:
      */
     static void zigzig(Nodo* nodo);
     /**
-     * Realiza la operación y luego "zig" "zag" en una posición de memoria, dos veces.
-     * @param nodo Nodo que será rotado.
-     */
-    static void zigzag(Nodo* nodo);
-    /**
-     * Realiza la operación y luego "zag" "zig" en una posición de memoria, dos veces.
-     * @param nodo Nodo que será rotado.
-     */
-    static void zagzig(Nodo* nodo);
-    /**
      * Realiza la operación "zag" en esta posición de memoria, dos veces.
      * @param nodo Nodo que será rotado.
      */
