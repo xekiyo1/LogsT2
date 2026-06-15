@@ -59,6 +59,18 @@ protected:
      * @param nodo Puntero al nodo que se modificará.
      */
     static void zag(Nodo *nodo);
+
+    /**
+    * Gets a node height
+    * @param nodo The node to be inspected
+    */
+    static uint getHeight(Nodo *nodo);
+
+    /**
+        Actualiza la altura de un nodo y, si ha sido actualizada, actualiza además la de su padre.
+        @param node El nodo cuya altura será actualizada
+    */
+    static void updateHeight(Nodo* node);
 public:
     /**
      * Función desforestadora. Es decir, elimina el árbol borrando todos los nodos.
@@ -79,6 +91,9 @@ public:
      * @note Podría re-balancear el árbol si es una subclase de BTree.
      */
     virtual Nodo* insert(uint val);
+    
+
+
 
     /**
      * Destructor. Libera toda la memoria ocupada por los nodos.

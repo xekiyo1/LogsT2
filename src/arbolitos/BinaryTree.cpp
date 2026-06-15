@@ -20,10 +20,19 @@ void BTree::zig(Nodo *nodo) {
     std::swap(nodo->der, obj->der);
     std::swap(nodo->izq, nodo->der);
 
-    //actualizar hijos
-    if (nodo->der != nullptr)nodo->der->parent = nodo;
-    if (obj->izq != nullptr)obj->izq->parent = obj;
-    if (obj->der != nullptr)obj->der->parent = obj;
+    //Cambiar las referencias a padres que quedaron mal hechas
+    std::swap(obj->der->parent, nodo->izq->parent);
+
+
+    //Actualización de altura
+    updateHeight(obj);
+    updateHeight(nodo);
+
+}
+
+uint BTree:: getHeight(Nodo* node){
+    if(node == nullptr) return 0;
+    return node->height; 
 }
 
 void BTree::zag(Nodo *nodo) {
@@ -40,10 +49,12 @@ void BTree::zag(Nodo *nodo) {
     //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
     std::swap(obj->der, nodo->der);
 
-    //actualizar hijos
-    if (nodo->izq != nullptr)nodo->izq->parent = nodo;
-    if (obj->izq != nullptr)obj->izq->parent = obj;
-    if (obj->der != nullptr)obj->der->parent = obj;
+    //Cambiar las referencias a padres que quedaron mal hechas
+    std::swap(nodo->der->parent, obj->izq->parent);
+
+    //Actualización de altura
+    updateHeight(obj);
+    updateHeight(nodo);
 }
 
 Nodo *BTree::search(const uint val) {
@@ -77,8 +88,10 @@ Nodo* BTree::insert(const uint val) {
     }
 
     //reasignar el puntero nulo a un nodo nuevecito
-    *siguiente = new Nodo{val,nullptr,nullptr,parent};
+    *siguiente = new Nodo{val,nullptr,nullptr,parent,1};
 
+
+    updateHeight(parent);
     //retornar el nodo nuevecito
     return *siguiente;
 }
@@ -114,4 +127,23 @@ void BTree::print() const {
     if (raiz==nullptr) std::cout<<"NULL";
     else raiz->print();
     std::cout<<std::endl;
+}
+
+void BTree::updateHeight(Nodo* node){
+    if (node==nullptr) return;
+
+    uint curr_height = node->height;
+    
+
+    //height of left son
+    uint lh = getHeight(node->izq);
+
+    //height of the right son
+    uint rh = getHeight(node->der);
+
+    //Updates height of the node
+    node->height = 1 + std::max(lh, rh);
+
+    // If height changes, updates the height of the parent as well
+    if (node->height != curr_height) return updateHeight(node->parent);
 }
