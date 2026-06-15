@@ -42,3 +42,5 @@ init:
 test:
 	g++ $(FLAGS-CONSTRUCT) src/main/test.cpp $(BTree) $(SplayFiles)
 	make exec
+	g++ $(FLAGS-CONSTRUCT) src/main/testAVL.cpp $(BTree) $(AVLFiles)
+	make exec
