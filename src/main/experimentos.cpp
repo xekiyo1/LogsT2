@@ -68,10 +68,10 @@ void experimentarAmbos(const string &etiquetaExperimento,
     BTree* arbol = new SplayTree;
     experimentar(etiquetaExperimento, arbol, "Splay", datosInsercion, datosBusqueda, N, M, csv);
     delete arbol;
-    /*
+    
     arbol = new AVL;
     experimentar(etiquetaExperimento, arbol,   "AVL",   datosInsercion, datosBusqueda, N, M, csv);
-    delete arbol;*/
+    delete arbol;
 }
 
 

@@ -7,7 +7,7 @@ Tester=src/main/experimentos.cpp
 
 Timer=src/util/calcTime/calcTime.cpp
 
-ALL-TREES=$(BTree) $(SplayFiles) #$(AVLFiles)
+ALL-TREES=$(BTree) $(SplayFiles) $(AVLFiles)
 UTIlS= $(RandomFiles)
 
 FILES-CONSTRUCT=$(Tester) $(ALL-TREES) $(UTIlS)
