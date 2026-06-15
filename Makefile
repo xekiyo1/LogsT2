@@ -7,7 +7,7 @@ Tester=src/main/experimentos.cpp
 
 Timer=src/util/calcTime/calcTime.cpp
 
-ALL-TREES=$(BTree) $(SplayFiles) $(AVLFiles)
+ALL-TREES=$(BTree) $(SplayFiles) #$(AVLFiles)
 UTIlS= $(RandomFiles)
 
 FILES-CONSTRUCT=$(Tester) $(ALL-TREES) $(UTIlS)
@@ -38,3 +38,7 @@ init:
 	install -Dv /dev/null bin/trees/__init_placeholder__.out
 	make clean
 	make allow-cli
+
+test:
+	g++ $(FLAGS-CONSTRUCT) src/main/test.cpp $(BTree) $(SplayFiles)
+	make exec

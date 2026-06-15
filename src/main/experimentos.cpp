@@ -4,9 +4,9 @@
 #include <string>
 #include <algorithm>
 #include <chrono>
-#include <cstdlib>
 #include <cmath>
 
+#include "../arbolitos/BinaryTree.h"
 #include "../arbolitos/AVL.h"
 #include "../arbolitos/SplayTree.h"
 #include "../RandomGen/RandomArray.h" 
@@ -47,14 +47,14 @@ void experimentar(const string &tipo,
     unsigned long long tiempoIns = timer.end();
 
     csv << N << "," << tipo << "," << nombre << ",InsercionTotal," << tiempoIns << "\n";
-    
+
     for (int i = 0; i < M; ++i) {
         const uint val = datosBusqueda[i];
         
         timer.start();
         arbol->search(val);
         const unsigned long long tiempoBsq = timer.end();
-        
+        cout<<"iniciando..."<<endl;
         csv << N << "," << tipo << "," << nombre << ",Busqueda_" << i << "," << tiempoBsq << "\n";
     }
 }                    
@@ -65,10 +65,13 @@ void experimentarAmbos(const string &etiquetaExperimento,
                     const std::size_t N,
                     const std::size_t M,
                     ofstream& csv) {
-    AVL avl;
-    SplayTree splay;
-    experimentar("b", &avl,   "AVL",   datosInsercion, datosBusqueda, N, M, csv);
-    experimentar("b", &splay, "Splay", datosInsercion, datosBusqueda, N, M, csv);
+    BTree* arbol = new SplayTree;
+    experimentar(etiquetaExperimento, arbol, "Splay", datosInsercion, datosBusqueda, N, M, csv);
+    delete arbol;
+    /*
+    arbol = new AVL;
+    experimentar(etiquetaExperimento, arbol,   "AVL",   datosInsercion, datosBusqueda, N, M, csv);
+    delete arbol;*/
 }
 
 
@@ -85,24 +88,25 @@ int main() {
         cout << "N = " << N << "  M = " << M << " ..." << flush;
 
         RandomValues generador(N);
+        string label = "a";
+        for (uint i=0;i<2;i++) {
+            // experimento de insercion y busqueda aleatoria
+            cout << "Inserción aleatoria con búsqueda" << (i?"sesgada":"uniforme") << endl;
+            vector<uint> insercion = generador.getVal(N); //por defecto es uniforme
+            vector<uint> busqueda = generador.getVal(M, i); //la primera vez uniforme, la segunda sesgada
+            experimentarAmbos(label, insercion, busqueda, N, M, csv);
 
-        vector<uint> insercionAleatoria = generador.getVal(N);
+            label[0] += 1;
 
-        vector<uint> insercionOrdenada = insercionAleatoria;
-        sort(insercionOrdenada.begin(), insercionOrdenada.end());
+            //ahora insertando de forma ordenada
+            cout << "Inserción ordenada con búsqueda" << (i?"sesgada":"uniforme") << endl;
+            insercion = generador.getVal(N);
+            busqueda = generador.getVal(M,i);//la primera vez uniforme, la segunda sesgada
 
-        vector<uint> busquedaUniforme(M);
-        for (size_t i = 0; i < M; ++i) {
-            uint idxAleatorio = static_cast<uint>(rand() % N);
-            busquedaUniforme[i] = generador[idxAleatorio];
+            sort(insercion.begin(),insercion.end());
+            experimentarAmbos(label, insercion, busqueda, N, M, csv);
+            label[0] += 1;
         }
-
-        vector<uint> busquedaSesgada = generador.getVal(M);
-
-        experimentarAmbos("a", insercionAleatoria, busquedaUniforme, N, M, csv);
-        experimentarAmbos("b", insercionAleatoria, busquedaSesgada, N, M, csv);
-        experimentarAmbos("c", insercionOrdenada, busquedaUniforme, N, M, csv);
-        experimentarAmbos("d", insercionOrdenada, busquedaSesgada, N, M, csv);
 
         cout << " OK" << endl;
     }
