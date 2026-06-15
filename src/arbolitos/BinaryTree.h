@@ -21,6 +21,20 @@ struct Nodo{
     struct Nodo *parent;
     //Altura para uso en árboles AVL
     uint height;
+
+    /* FUNCIONES DE DEBUG */
+
+    /**
+     * Comprueba que dos nodos sean iguales a base de comparar los valores de todos sus hijos recursivamente (incluyendo nullptr)
+     * @param otro El nodo al que se comparará esta instancia.
+     * @return Verdadero si los nodos forman un árbol con los mismos valores en las mismas posiciones. Si no, falso.
+     */
+    bool operator==(const Nodo &otro) const;
+
+    /**
+     * Imprime los contenidos del nodo en formato A(B,C) recursivamente.
+     */
+    void print() const;
 };
 
 /**
@@ -70,6 +84,24 @@ public:
      * Destructor. Libera toda la memoria ocupada por los nodos.
      */
     virtual ~BTree() {clear();}
+
+
+    /* FUNCIONES DE DEBUG */
+
+    /// Aplica zig a la raíz del árbol. Tiene propósitos de debugging.
+    void zig() const {zig(raiz);}
+    /// Aplica zag a la raíz del árbol. Tiene propósitos de debugging.
+    void zag() const {zag(raiz);}
+    /**
+     * Compara las raíces de dos árboles de cualquier tipo, fijándose solo en los valores.
+     * @param arbol Compara árboles a base de revisar si sus raíces son iguales.
+     * @return Verdadero si ambos tienen raíz nula o equivalentes (con comparación de nodos). Falso si uno tiene raíz
+     * y el otro no, o si los Nodos no son iguales.
+     */
+    bool operator==(const BTree& arbol) const;
+
+    ///Imprime los contenidos del árbol en formato A(B,C) recursivamente.
+    void print() const;
 };
 
 #endif //LOGST2_BINARYTREE_H
