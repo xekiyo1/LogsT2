@@ -3,6 +3,7 @@
 //
 
 #include "AVL.h"
+#include <cmath>
 
 Nodo* AVL::insert(uint val){
     // Inserta el valor. Esto cambia los valores de balance
@@ -16,9 +17,10 @@ Nodo* AVL::insert(uint val){
 }
 
 void AVL::balance(Nodo* node){
-    if (node ==nullptr) return;
     int bf = getBalanceFactor(node); //How do i get a bf? >~<
 
+    if(std::abs(bf)<=1) return;
+    
     Nodo* parent = node->parent;
     Nodo* child;
 
