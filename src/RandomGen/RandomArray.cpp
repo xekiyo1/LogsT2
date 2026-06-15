@@ -8,7 +8,6 @@
     std::mt19937 gen(rd());
 
 uint RandomValues::generateRandUint() {
-
     return gen();
 }
 
@@ -28,25 +27,18 @@ RandomValues::RandomValues(const std::size_t howMany) {
     probs = std::discrete_distribution<uint>(probab.begin(), probab.end());
 }
 
-uint RandomValues::generateIdx() {
-    return probs(gen);
+uint RandomValues::generateIdx(const bool uniform) {
+    // notar que como N es potencia de dos, & N-1 es lo mismo que % N
+    // y como uint también es potencia de dos, es una generación uniforme en cualquier rango de bits
+    return uniform ? generateRandUint() & N-1 : probs(gen);
 }
 
-/*
-ullong RandomValues::calcProb(uint i) {
-
-    ullong peso = exp(-lambda * i);
-
-    return peso/static_cast<double>(N);
-
-}*/
-
-std::vector<uint> RandomValues::getVal(std::size_t quantity) {
+std::vector<uint> RandomValues::getVal(const std::size_t quantity, const bool uniformDist) {
     std::vector<uint> ans(quantity);
-    for (uint &x : ans) x = operator[](generateIdx());
+    for (uint &x : ans) x = operator[](generateIdx(uniformDist));
     return ans;
 }
 
-const uint &RandomValues::operator[](uint i) const {
+const uint &RandomValues::operator[](const uint i) const {
     return dataset[i];
 }

@@ -17,17 +17,22 @@ private:
     std::vector<uint> dataset;
     /// Vector que almacena las probabilidades como discrete distribution
     std::discrete_distribution<uint> probs;
-    uint generateIdx();
+    uint generateIdx(bool uniform = false);
     static uint generateRandUint();
-    //static ullong calcProb(uint i);
 public:
+    /**
+     * Crea un dataset de valores al azar (en un unsigned int) con un tamaño dado, el cual
+     * será utilizado para entregar los valores aleatorios.
+     * @param howMany Tamaño del dataset a crear. Debe ser una potencia de 2.
+     */
     RandomValues(std::size_t howMany);
     /**
      * Obtiene valores aleatorios de los almacenados dentro de esta estructura.
      * @param quantity Cantidad de valores que se quieren obtener. (Se pueden repetir)
+     * @param uniformDist Indica si se eligen los valores de forma uniforme, o si se usa la distribución sesgada interna.
      * @return Valor aleatorio entre los almacenados por esta estructura. Lanza error si no tiene ninguno.
      */
-    std::vector<uint> getVal(std::size_t quantity);
+    std::vector<uint> getVal(std::size_t quantity, bool uniformDist = true);
 
     /**
      * Retorna un índice específico de los datos.
