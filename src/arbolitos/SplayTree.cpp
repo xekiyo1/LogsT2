@@ -33,8 +33,8 @@ void SplayTree::splay(Nodo *nodo) {
 }
 
 void SplayTree::zigzig(Nodo *nodo) { zig(nodo); zig(nodo); }
-void SplayTree::zigzag(Nodo *nodo) { zig(nodo->der); zag(nodo); }
-void SplayTree::zagzig(Nodo *nodo) { zag(nodo->izq); zig(nodo); }
+void SplayTree::zigzag(Nodo *nodo) { zag(nodo->izq); zig(nodo); }
+void SplayTree::zagzig(Nodo *nodo) { zig(nodo->der); zag(nodo); }
 void SplayTree::zagzag(Nodo *nodo) { zag(nodo); zag(nodo); }
 
 Nodo *SplayTree::insert(const uint val) {

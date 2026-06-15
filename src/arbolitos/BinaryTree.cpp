@@ -20,13 +20,10 @@ void BTree::zig(Nodo *nodo) {
     std::swap(nodo->der, obj->der);
     std::swap(nodo->izq, nodo->der);
 
-    //Cambiar las referencias a padres que quedaron mal hechas
-    std::swap(obj->der->parent, nodo->izq->parent);
-
-
-    //Actualización de altura
-    updateHeight(obj);
-    updateHeight(nodo);
+    //actualizar hijos
+    if (nodo->izq != nullptr)nodo->izq->parent = nodo;
+    if (obj->izq != nullptr)obj->izq->parent = obj;
+    if (obj->der != nullptr)obj->der->parent = obj;
 
 }
 
@@ -49,12 +46,10 @@ void BTree::zag(Nodo *nodo) {
     //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
     std::swap(obj->der, nodo->der);
 
-    //Cambiar las referencias a padres que quedaron mal hechas
-    std::swap(nodo->der->parent, obj->izq->parent);
-
-    //Actualización de altura
-    updateHeight(obj);
-    updateHeight(nodo);
+    //actualizar hijos
+    if (nodo->der != nullptr)nodo->der->parent = nodo;
+    if (obj->izq != nullptr)obj->izq->parent = obj;
+    if (obj->der != nullptr)obj->der->parent = obj;
 }
 
 Nodo *BTree::search(const uint val) {
@@ -116,6 +111,7 @@ bool BTree::operator==(const BTree &otro) const {
 }
 
 void Nodo::print() const {
+    if (parent != nullptr && (parent->izq != this && parent->der != this))std::cout<<"me puse a llorar";
     std::cout<<value<<'(';
     if (izq!=nullptr)izq->print();
     std::cout<<',';

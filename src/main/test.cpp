@@ -5,14 +5,20 @@
 
 #include "../arbolitos/SplayTree.h"
 
+SplayTree hola;
+void insert(uint i) {
+    hola.insert(i);
+    hola.print();
+}
+
 int main(){
     //para probar que funcionan bien el zig y el zag
-    SplayTree hola;
-    hola.insert(5);
-    hola.insert(2); //2(,5)
-    hola.insert(7); //2(,5(,7)) -> 7(5(2,),)
-    BTree tester; tester.insert(7); tester.insert(5); tester.insert(2);
-    assert(hola == tester);
 
-
+    insert(5);
+    insert(2); //2(,5)
+    insert(7); //2(,5(,7)) -> 7(5(2,),)
+    insert(20);
+    insert(8);
+    insert(9);
+    insert(10);
 }
