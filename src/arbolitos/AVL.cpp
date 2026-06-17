@@ -35,7 +35,7 @@ void AVL::balance(Nodo* node) {
         }else if(bf==2){
             if(getBalanceFactor(node->izq) < 0) zigzag(node); //LR -> zig-zag
             else zig(node); //LL
-        }else
+        }else //avisar si lo tenemos mal implementado (bf imposible unu)
             throw std::runtime_error("Error balanceando AVLs");
 
         //actualizar alturas post-rotación

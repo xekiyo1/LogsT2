@@ -24,12 +24,14 @@ Para correr la tarea, basta con ir al directorio desde una terminal y correr
 make run 
 ```
 
-Esto creará diversos archivos .csv con las métricas obtenidas de la creación de los árboles,
-mientras imprime en tiempo real la información que va rescatando. Todos los archivos aparecerán en la carpeta donde se esté corriendo la tarea.
+Esto producirá un archivo .csv con los tiempos obtenidos de la creación y búsqueda de los árboles,
+mientras imprime en tiempo real en qué fase del experimento va. El archivo contiene los resultados
+en una lista que indica el tamaño del dataset (N) y la cantidad de búsquedas (M) por lo que se requiere
+un
 
 
 El código está difícil de leer (principalmente en las rotaciones) por lo que si se necesita ayuda de confianza
-en la implementación, se hicieron tests en src/main/test.cpp. Para correrlos, usar:
+en la implementación, se hicieron tests de rotaciones en src/main/test.cpp. Para correrlos, usar:
 
 ``` bash
 make test
@@ -47,4 +49,4 @@ make test
 ⣿⡌⢻⣿⣿⣿⣿⣿⣿⣿⣿⣍⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢁⣾
 ⣿⡘⠦⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣡⣾⣿
 ```
-^ imagen increíble! (es apoyo moral, no es relevante a la ejecución)
+^ imagen increíble! (esta figura no es relevante a la ejecución y solo representa una bonificación de apoyo moral para terminar el semestre)

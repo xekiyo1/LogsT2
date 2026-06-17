@@ -4,13 +4,13 @@ SplayFiles=src/arbolitos/SplayTree.h src/arbolitos/SplayTree.cpp
 RandomFiles=src/RandomGen/RandomArray.h src/RandomGen/RandomArray.cpp
 
 Tester=src/main/experimentos.cpp
-
-Timer=src/util/calcTime/calcTime.cpp
+Teoremas=src/main/experimentosTeoremas.cpp
 
 ALL-TREES=$(BTree) $(SplayFiles) $(AVLFiles)
 UTIlS= $(RandomFiles)
 
 FILES-CONSTRUCT=$(Tester) $(ALL-TREES) $(UTIlS)
+FILES-CONSTRUCT2=$(Teoremas) $(ALL-TREES) $(UTIlS)
 FLAGS-CONSTRUCT=-O3 -o "$(OUT)"
 
 OUT=a.out
@@ -20,8 +20,12 @@ exec:
 
 compile:
 	g++ $(FLAGS-CONSTRUCT) $(FILES-CONSTRUCT)
+compile-teorema:
+	g++ $(FLAGS-CONSTRUCT) $(FILES-CONSTRUCT2)
 run:
 	make compile
+	make exec
+	make compile-teorema
 	make exec
 
 clean:
