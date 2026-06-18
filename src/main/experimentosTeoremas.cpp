@@ -8,6 +8,7 @@
 #include "../arbolitos/BinaryTree.h"
 #include "../arbolitos/AVL.h"
 #include "../arbolitos/SplayTree.h"
+#include "../RandomGen/RandomArray.h"
 #include "HPTimer.cpp"
 
 int main() {
@@ -18,23 +19,19 @@ int main() {
     cout << "Hora de la experimentacion :v" << N << endl;
 
     int semilla = 67; // semilla para reproducibilidad
-    vector<uint> dataset(N);
-    mt19937_64 rng(semilla);
-    uniform_int_distribution<uint> dist(0, 4294967295U);
-    for (size_t i = 0; i < N; ++i)
-        dataset[i] = dist(rng);
+    RandomValues dataset(N,semilla);
 
     cout << "Construyendo AVL y Splay Tree (Se demora harto confíen)" << flush;
     BTree* avl = new AVL();
     BTree* splay = new SplayTree();
-
+    vector<uint> dataset_sorted(N);
     for(size_t i = 0; i < N; ++i) {
         avl->insert(dataset[i]);
         splay->insert(dataset[i]);
+        dataset_sorted[i] = dataset[i];
     }
     cout << " LISTO." << endl;
 
-    vector<uint> dataset_sorted = dataset;
     sort(dataset_sorted.begin(), dataset_sorted.end());
     // eliminamos duplicados por orden estrictamente creciente
     dataset_sorted.erase(unique(dataset_sorted.begin(), dataset_sorted.end()), dataset_sorted.end());
@@ -49,9 +46,8 @@ int main() {
         vector<uint> seq_access;
         seq_access.reserve(m);
         size_t step = N_unique / m;
-        for(size_t j = 0; j < m; ++j) {
+        for(size_t j = 0; j < m; ++j)
             seq_access.push_back(dataset_sorted[j * step]);
-        }
 
         HPTimer timer;
 
@@ -75,38 +71,32 @@ int main() {
     cout << "\nWorking Set Theorem" << endl;
     size_t M = 10ULL * c * N;
     vector<size_t> W_values = {10, 100, 1000, 10000, 100000, 1000000};
-    vector<uint> working_set;
     for(size_t W : W_values) {
         cout << "  W = " << W << "... " << flush;
 
         // elegir W elementos aleatorios (subset W)
-        working_set.resize(W);
-        uniform_int_distribution<size_t> distIdx(0, N - 1);
-        for(uint &j : working_set)
-            j = dataset[distIdx(rng)];
+        vector<uint> working_set = dataset.getVal(W);
 
-
-        //Indices Random Precalculados (Calculo 5 millones pq tener N^25 sería muy insano lowkey highkey no cap on god bro)
-        size_t blockSize = min(M, (size_t)5000000);
-        vector<uint> rnd_idx(blockSize);
-        uniform_int_distribution<size_t> wsDist(0, W - 1);
-        for(size_t j = 0; j < blockSize; ++j) {
-            rnd_idx[j] = working_set[wsDist(rng)];
-        }
-
+        //Indices Random Precalculados (Calculo 5 millones pq tener 2^25 sería muy insano lowkey highkey no cap on god bro)
+        //size_t blockSize = min<size_t>(M, 5000000);
+        //vector<uint> rnd_idx = working_set.getVal(blockSize);
+        //uint idx = 0;
         HPTimer timer;
 
         // Test AVL
+        RandomValues working_dataset(working_set,semilla);
         timer.start();
         for(size_t k = 0; k < M; ++k)
-            avl->search(rnd_idx[k % blockSize]);
+            avl->search(working_dataset.generate());
         unsigned long long timeAVL_WS = timer.end();
         csv << N << ",WorkingSet,AVL,W=" << W << "," << timeAVL_WS << "\n";
 
         // Test Splay
+        //usar la misma semilla nos dará los mismos números (lo probé dejando correr un while como por 20 minutos)
+        working_dataset = RandomValues(working_set,semilla);
         timer.start();
         for(size_t k = 0; k < M; ++k)
-            splay->search(rnd_idx[k % blockSize]);
+            splay->search(working_dataset.generate());
         unsigned long long timeSplay_WS = timer.end();
         csv << N << ",WorkingSet,Splay,W=" << W << "," << timeSplay_WS << "\n";
 
