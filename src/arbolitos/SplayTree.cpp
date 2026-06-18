@@ -38,12 +38,26 @@ void SplayTree::zagzag(Nodo *nodo) { zag(nodo); zag(nodo); }
 
 Nodo *SplayTree::insert(const uint val) {
     Nodo *nodo = BTree::insert(val);
-    splay(nodo);
+    splay(nodo); //siempre existe (incluso si ya estaba en el árbol)
     return raiz;
 }
 
 Nodo *SplayTree::search(const uint val) {
-    Nodo *nodo = BTree::search(val);
-    splay(nodo);
+    Nodo* ans = raiz, *last = nullptr;
+
+    //buscar igual que en el OG
+    while (ans != nullptr && ans->value != val) {
+        last = ans;
+        ans = val < ans->value ? ans->izq : ans->der;
+    }
+
+    //si no lo encontramos, hay que splayear el último visto y devolver nulo
+    if (ans == nullptr) {
+        splay(last);
+        return nullptr;
+    }
+
+    //si lo encontramos, entonces splay() y luego devolver la nueva raíz
+    splay(ans);
     return raiz;
 }
