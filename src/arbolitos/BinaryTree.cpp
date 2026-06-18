@@ -53,7 +53,7 @@ void BTree::zagzig(Nodo *nodo) { zig(nodo->der); zag(nodo); }
 Nodo *BTree::search(const uint val) {
     Nodo* ans = raiz;
     while (ans != nullptr && ans->value != val)
-        ans = ans->value < val ? ans->izq : ans->der;
+        ans = val < ans->value ? ans->izq : ans->der;
     return ans;
 }
 
