@@ -42,6 +42,9 @@ int main(){
     //ahora, si inserto algo mayor a 2, tendré que hacer zig-zag
     arbolito.insert(3); // 4(2(,3),6(,)) -> zig-zag -> 3(2,4(,6))
     check({3,2,4,6});
-
+    //3(2,4(,6(5,))) -> [4(,6(5,)) -> 5(4,6)]
+    //-> 3(2,5(4,6)) -> 5(3(2,4), 6)
+    arbolito.insert(5);
+    check({5,3,2,4,6});
     std::cout << "Todo funcionó!" << std::endl;
 }

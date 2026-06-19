@@ -10,41 +10,41 @@
 void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->izq;
 
+    Nodo *A = obj->izq, *B = obj->der , *C = nodo->der;
+
     // cambiar el valor
     std::swap(nodo->value, obj->value);
 
-    // cambiar los hijos
-    std::swap(obj->izq, obj->der);
+    nodo->izq = A;
 
-    //dar vuelta las referencias
-    std::swap(nodo->der, obj->der);
-    std::swap(nodo->izq, nodo->der);
+    nodo->der = obj;
+    obj->izq = B;
+    obj->der = C;
 
     //actualizar hijos
-    if (nodo->izq != nullptr)nodo->izq->parent = nodo;
-    if (obj->izq != nullptr)obj->izq->parent = obj;
-    if (obj->der != nullptr)obj->der->parent = obj;
-
+    if (A != nullptr)A->parent = nodo;
+    if (B != nullptr)B->parent = obj;
+    if (C != nullptr)C->parent = obj;
 }
 
 void BTree::zag(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
-    // intercambiar el valor de los nodos
+    Nodo *A = nodo->izq, *B = obj->izq, *C = obj->der;
+
+    // cambiar el valor
     std::swap(nodo->value, obj->value);
 
-    // ahora "obj" debe estar a la izquierda de "nodo" en vez de su derecha
-    std::swap(nodo->izq, nodo->der);
+    nodo->izq = obj;
 
-    //el valor de la izq quedó en nodo->der, debe dejarse lo más a la izq posible
-    std::swap(nodo->der, obj->izq);
-    //finalmente, el valor de más a la der quedó en obj->der, debe irse a nodo->der
-    std::swap(obj->der, nodo->der);
+    obj->izq = A;
+    obj->der = B;
+    nodo->der = C;
 
     //actualizar hijos
-    if (nodo->der != nullptr)nodo->der->parent = nodo;
-    if (obj->izq != nullptr)obj->izq->parent = obj;
-    if (obj->der != nullptr)obj->der->parent = obj;
+    if (A != nullptr)A->parent = obj;
+    if (B != nullptr)B->parent = obj;
+    if (C != nullptr)C->parent = nodo;
 }
 
 void BTree::zigzag(Nodo *nodo) { zag(nodo->izq); zig(nodo); }
