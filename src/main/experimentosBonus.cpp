@@ -50,13 +50,16 @@ int main() {
 
     inorden(nodo,&serie);
 
+    cout << "Recorriendo el arbol 2 con la serie"<< "\n" << flush;
     HPTimer timer;
-
-    cout << "Recorriendo el arbol 2 con la serie" << flush;
-    timer.start();
-    for (uint i : serie){T1->search(i);}
-    unsigned long long BonusTime = timer.end();
-    csv << N << ",Bonus,Splay,m=0," << BonusTime << "\n";
+    int numero = 1;
+    for (uint i : serie){
+        timer.start();
+        T1->search(i);
+        unsigned long long BonusTime = timer.end();
+        csv << numero << ",Bonus,Splay,m=0," << BonusTime << "\n";
+        numero++;
+}
 
     cout << " LISTO." << endl;
 
