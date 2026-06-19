@@ -23,7 +23,6 @@ void BTree::zig(Nodo *nodo) {
 
     //actualizar hijos
     if (A != nullptr)A->parent = nodo;
-    if (B != nullptr)B->parent = obj;
     if (C != nullptr)C->parent = obj;
 }
 
@@ -43,7 +42,6 @@ void BTree::zag(Nodo *nodo) {
 
     //actualizar hijos
     if (A != nullptr)A->parent = obj;
-    if (B != nullptr)B->parent = obj;
     if (C != nullptr)C->parent = nodo;
 }
 
