@@ -16,10 +16,13 @@ int main() {
     ofstream csv("teoremas.csv");
 
     size_t N = 1ULL << 25; // N = 2^25
-    cout << "Hora de la experimentacion :v" << N << endl;
+    cout << "Hora de la experimentacion :v " << N << endl;
 
     int semilla = 67; // semilla para reproducibilidad
     RandomValues dataset(N,semilla);
+    
+    std::mt19937_64 = random(semilla);
+    
 
     cout << "Construyendo AVL y Splay Tree (Se demora harto confíen)" << flush;
     BTree* avl = new AVL();

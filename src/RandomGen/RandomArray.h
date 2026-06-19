@@ -16,8 +16,6 @@ class RandomValues {
 private:
     /// Cantidad de valores generados por esta estructura en la inicialización.
     std::size_t N;
-    /// Vector que almacena los valores generados en la inicialización.
-    std::vector<uint> dataset;
     /// Vector que almacena las probabilidades como discrete distribution
     std::discrete_distribution<uint> probs;
     /// Generador de números aleatorios
@@ -35,6 +33,10 @@ private:
     /// Actualiza la probabilidad sesgada con tal de utilizarla lueguito
     void updateProbs();
 public:
+
+    /// Vector que almacena los valores generados en la inicialización.
+    std::vector<uint> dataset;
+
     /**
      * Crea un dataset de valores al azar (en un unsigned int) con un tamaño dado, el cual
      * será utilizado para entregar los valores aleatorios.

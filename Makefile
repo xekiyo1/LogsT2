@@ -5,12 +5,15 @@ RandomFiles=src/RandomGen/RandomArray.h src/RandomGen/RandomArray.cpp
 
 Tester=src/main/experimentos.cpp
 Teoremas=src/main/experimentosTeoremas.cpp
+Bonus=src/main/experimentosBonus.cpp
+
 
 ALL-TREES=$(BTree) $(SplayFiles) $(AVLFiles)
 UTIlS= $(RandomFiles)
 
 FILES-CONSTRUCT=$(Tester) $(ALL-TREES) $(UTIlS)
-FILES-CONSTRUCT2=$(Teoremas) $(ALL-TREES) $(UTIlS)
+FILES-CONSTRUCT2=$(Teoremas) $(ALL-TREES) $(UTIlS) 
+FILES-BONUS=$(Bonus) $(ALL-TREES) $(UTIlS)
 FLAGS-CONSTRUCT=-O3 -o "$(OUT)"
 
 OUT=a.out
@@ -22,12 +25,18 @@ compile:
 	g++ $(FLAGS-CONSTRUCT) $(FILES-CONSTRUCT)
 compile-teorema:
 	g++ $(FLAGS-CONSTRUCT) $(FILES-CONSTRUCT2)
+compile-bonus:
+	g++ $(FLAGS-CONSTRUCT) $(FILES-BONUS)
 run:
 	make compile
 	make exec
 	make compile-teorema
 	make exec
-
+run-bonus:
+	make compile
+	make exec
+	make compile-bonus
+	make exec
 clean:
 	find . -type f -name "*.bin" ! -path "*/data/*" -delete
 	find -type f -name "*.out" -delete
