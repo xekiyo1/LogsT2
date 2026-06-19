@@ -33,8 +33,13 @@ run:
 	make compile-teorema
 	make exec
 run-bonus:
+	make compile-bonus
+	make exec
+run-all:
 	make compile
 	make exec
+	make compile-teorema
+	make exec	
 	make compile-bonus
 	make exec
 clean:

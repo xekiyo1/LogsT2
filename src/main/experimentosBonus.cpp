@@ -37,7 +37,7 @@ int main() {
     vector<uint> permutado = dataset.dataset;
     shuffle(permutado.begin(),permutado.end(), permutacion);
 
-    cout << "Construyendo T1 y T2 (Se demora harto confíen otra vez)" << flush;
+    cout << "Construyendo T1 y T2 (Se demora harto confíen otra vez)" << "\n" << flush;
     BTree* T1 = new SplayTree();
     BTree* T2 = new SplayTree();
     Nodo* nodo;
