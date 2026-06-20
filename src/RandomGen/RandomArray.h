@@ -12,6 +12,8 @@ constexpr double lambda = 0.008;
 /// Generador global, que se usa para elegir semillas al azar.
 inline std::random_device rd;
 
+/// Clase encargada de almacenar una cantidad dada de datos y entregarlos de forma aleatoria,
+/// ya sea uniformemente o con un sesgo específico.
 class RandomValues {
 private:
     /// Cantidad de valores generados por esta estructura en la inicialización.

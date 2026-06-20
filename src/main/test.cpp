@@ -45,6 +45,10 @@ int main(){
     //3(2,4(,6(5,))) -> [4(,6(5,)) -> 5(4,6)]
     //-> 3(2,5(4,6)) -> 5(3(2,4), 6)
     arbolito.insert(5);
+
     check({5,3,2,4,6});
+    arbolito.search(4);
+    arbolito.search(7);
+    arbolito.search(0);
     std::cout << "Todo funcionó!" << std::endl;
 }

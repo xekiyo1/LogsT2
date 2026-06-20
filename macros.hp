@@ -5,6 +5,9 @@
 #ifndef LOGST2_MACROS_H
 #define LOGST2_MACROS_H
 
+/// Constante a utilizar para experimentos
+inline int c = 10;
+
 typedef unsigned int uint;
 typedef double dab;
 typedef long double daab;

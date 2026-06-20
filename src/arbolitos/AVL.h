@@ -6,6 +6,8 @@
 #define LOGST2_AVL_H
 #include "BinaryTree.h"
 
+/// Clase extensión del BTree que rebalancea el árbol automáticamente al momento de
+/// insertar valores nuevos.
 class AVL : public BTree{
 protected:
     /**

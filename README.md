@@ -8,14 +8,8 @@ aleatorios, ya sean a elección uniforme o sesgada, con tal de encontrar los cas
 ## Requisitos
 
 - Se requiere un sistema operativo basado en Unix que cuente con los siguientes comandos/librerias
-    + grep
-    + ls
-    + rm
-    + gcc (version >= 11.4)
-    + xargs (version >= 4.8.0)
-    + chmod
+    + gcc (version >= 16.1.1)
     + make
-    + test
 
 ## Correr el programa
 Para correr la tarea, basta con ir al directorio desde una terminal y correr
@@ -24,11 +18,30 @@ Para correr la tarea, basta con ir al directorio desde una terminal y correr
 make run 
 ```
 
-Esto producirá un archivo .csv con los tiempos obtenidos de la creación y búsqueda de los árboles,
+Esto producirá un archivo _resultados.csv_ con los tiempos obtenidos de la creación y búsqueda de los árboles,
 mientras imprime en tiempo real en qué fase del experimento va. El archivo contiene los resultados
-en una lista que indica el tamaño del dataset (N) y la cantidad de búsquedas (M) por lo que se requiere
-un
+en una lista que indica el tamaño del dataset (N) y la cantidad de búsquedas (M).
 
+
+Luego, se realizan los experimentos largos que buscan verificar los teoremas de acceso secuencial y grupo de trabajo.
+Estos se guardarán en el archivo teoremas.csv.
+
+
+La segunda fase del experimento es larga, por lo que se realiza en un paso separado. Es decir, si se interrumpe la
+ejecución una vez comience el segundo experimento, para ese entonces el primero ya habrá generado sus resultados
+en el archivo correspondiente.
+
+### Experimento bonus
+Finalmente, para correr el experimento de bonificación, se puede usar
+``` bash
+make run-bonus
+```
+Lo cual guardará los resultados en bonus.csv.
+
+Y alternativamente, para correrlo en conjunto al resto:
+``` bash
+make run-all
+```
 
 El código está difícil de leer (principalmente en las rotaciones) por lo que si se necesita ayuda de confianza
 en la implementación, se hicieron tests de rotaciones en src/main/test.cpp. Para correrlos, usar:
@@ -36,6 +49,9 @@ en la implementación, se hicieron tests de rotaciones en src/main/test.cpp. Par
 ``` bash
 make test
 ```
+¡Eso es todo!
+
+
 
 ```text
 ⣿⣿⣿⣿⣿⣿⠟⠁⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿
@@ -50,3 +66,6 @@ make test
 ⣿⡘⠦⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣡⣾⣿
 ```
 ^ imagen increíble! (esta figura no es relevante a la ejecución y solo representa una bonificación de apoyo moral para terminar el semestre)
+
+
+(además si la borras el código tomará $O(N^{67})$ en correr, o eso dicen.)

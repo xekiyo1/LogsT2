@@ -23,7 +23,7 @@ RandomValues::RandomValues(const std::vector<uint> &data, const uint seed) {
 
 void RandomValues::updateProbs() {
     N = dataset.size();
-    std::vector<double> weight(N);
+    std::vector<dab> weight(N);
 
     // peso relativo e^(-lambda * i)
     for (size_t i = 0; i < N; ++i)

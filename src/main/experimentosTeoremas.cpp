@@ -12,7 +12,6 @@
 #include "HPTimer.cpp"
 
 int main() {
-    int c = 2;
     ofstream csv("teoremas.csv");
 
     size_t N = 1ULL << 25; // N = 2^25
@@ -20,9 +19,6 @@ int main() {
 
     int semilla = 67; // semilla para reproducibilidad
     RandomValues dataset(N,semilla);
-    
-    std::mt19937_64 = random(semilla);
-    
 
     cout << "Construyendo AVL y Splay Tree (Se demora harto confíen)" << flush;
     BTree* avl = new AVL();
@@ -54,22 +50,27 @@ int main() {
 
         HPTimer timer;
 
-        // Test AVL
-        timer.start();
-        for(uint key : seq_access) avl->search(key);
-        unsigned long long timeAVL = timer.end();
-        csv << N << ",SeqAccess,AVL,m=" << m << "," << timeAVL << "\n";
-
         // Test Splay
         timer.start();
         for(uint key : seq_access) splay->search(key);
         unsigned long long timeSplay = timer.end();
         csv << N << ",SeqAccess,Splay,m=" << m << "," << timeSplay << "\n";
 
+        // Test AVL
+        timer.start();
+        for(uint key : seq_access) avl->search(key);
+        unsigned long long timeAVL = timer.end();
+        csv << N << ",SeqAccess,AVL,m=" << m << "," << timeAVL << "\n";
+
         cout << "OK" << endl;
     }
     dataset_sorted.clear();
+    delete avl;
+    delete splay;
 
+    csv.close();
+    cout << "La experimentación ha sido completada y somos sigmas" << endl;
+    return 0;
     // Working Set Theorem
     cout << "\nWorking Set Theorem" << endl;
     size_t M = 10ULL * c * N;
@@ -85,7 +86,7 @@ int main() {
         //vector<uint> rnd_idx = working_set.getVal(blockSize);
         //uint idx = 0;
         HPTimer timer;
-
+        
         // Test AVL
         RandomValues working_dataset(working_set,semilla);
         timer.start();

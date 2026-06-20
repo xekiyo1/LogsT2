@@ -6,6 +6,13 @@
 #define LOGST2_SPLAYTREE_H
 #include "BinaryTree.h"
 
+/**
+ * Clase que representa al objeto de estudio: un Splay Tree.
+ * Extiende de BTree y realiza rotaciones dobles luego de cada búsqueda e inserción
+ * para llevar el último nodo visto hasta la raíz (incluye al recién insertado, si aplica).
+ *
+ * Tiene el enfoque bottom-up (rotaciones desde el nodo a la raíz, en vez de al revés).
+ */
 class SplayTree : public BTree {
 private:
     /**

@@ -13,7 +13,11 @@
 
 using namespace std;
 
-
+/**
+ * Recorre un nodo en inorden y guarda los valores vistos en un vector.
+ * @param raiz Nodo principal desde el que se comenzará a buscar.
+ * @param serie Vector al que se guardarán los valores encontrados.
+ */
 void inorden(Nodo* raiz, vector<uint>* serie) {
     if (raiz != nullptr){
         inorden(raiz->izq,serie);
@@ -24,7 +28,7 @@ void inorden(Nodo* raiz, vector<uint>* serie) {
 
 
 int main() {
-    ofstream csv("teoremas.csv");
+    ofstream csv("bonus.csv");
 
     size_t N = 1ULL << 25; // N = 2^25
     cout << "Hora de la experimentacion Bonus :v | N = " << N << endl;

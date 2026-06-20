@@ -7,17 +7,19 @@
 #include <algorithm>
 #include <iostream>
 
+Nodo *A, *B, *C;
+
 void BTree::zig(Nodo *nodo) {
     Nodo *obj = nodo->izq;
 
-    Nodo *A = obj->izq, *B = obj->der , *C = nodo->der;
+    A = obj->izq, B = obj->der , C = nodo->der;
 
     // cambiar el valor
     std::swap(nodo->value, obj->value);
 
-    nodo->izq = A;
-
     nodo->der = obj;
+
+    nodo->izq = A;
     obj->izq = B;
     obj->der = C;
 
@@ -29,7 +31,7 @@ void BTree::zig(Nodo *nodo) {
 void BTree::zag(Nodo *nodo) {
     Nodo *obj = nodo->der;
 
-    Nodo *A = nodo->izq, *B = obj->izq, *C = obj->der;
+    A = nodo->izq, B = obj->izq, C = obj->der;
 
     // cambiar el valor
     std::swap(nodo->value, obj->value);
